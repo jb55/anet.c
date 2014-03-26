@@ -1,0 +1,6 @@
+{
+  "name": "anet",
+  "version": "1.1.2",
+  "repo": "jb55/anet.c",
+  "install": "make install"
+}
