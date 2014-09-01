@@ -104,7 +104,7 @@ int anetTcpKeepAlive(char *err, int fd)
     return ANET_OK;
 }
 
-int anetResolve(char *err, char *host, char *ipbuf)
+int anetResolve(char *err, const char *host, char *ipbuf)
 {
     struct sockaddr_in sa;
 
@@ -141,7 +141,7 @@ static int anetCreateSocket(char *err, int domain) {
 
 #define ANET_CONNECT_NONE 0
 #define ANET_CONNECT_NONBLOCK 1
-static int anetTcpGenericConnect(char *err, char *addr, int port, int flags)
+static int anetTcpGenericConnect(char *err, const char *addr, int port, int flags)
 {
     int s;
     struct sockaddr_in sa;
@@ -178,17 +178,17 @@ static int anetTcpGenericConnect(char *err, char *addr, int port, int flags)
     return s;
 }
 
-int anetTcpConnect(char *err, char *addr, int port)
+int anetTcpConnect(char *err, const char *addr, int port)
 {
     return anetTcpGenericConnect(err,addr,port,ANET_CONNECT_NONE);
 }
 
-int anetTcpNonBlockConnect(char *err, char *addr, int port)
+int anetTcpNonBlockConnect(char *err, const char *addr, int port)
 {
     return anetTcpGenericConnect(err,addr,port,ANET_CONNECT_NONBLOCK);
 }
 
-int anetUnixGenericConnect(char *err, char *path, int flags)
+int anetUnixGenericConnect(char *err, const char *path, int flags)
 {
     int s;
     struct sockaddr_un sa;
@@ -214,12 +214,12 @@ int anetUnixGenericConnect(char *err, char *path, int flags)
     return s;
 }
 
-int anetUnixConnect(char *err, char *path)
+int anetUnixConnect(char *err, const char *path)
 {
     return anetUnixGenericConnect(err,path,ANET_CONNECT_NONE);
 }
 
-int anetUnixNonBlockConnect(char *err, char *path)
+int anetUnixNonBlockConnect(char *err, const char *path)
 {
     return anetUnixGenericConnect(err,path,ANET_CONNECT_NONBLOCK);
 }
@@ -241,7 +241,7 @@ int anetRead(int fd, char *buf, int count)
 
 /* Like write(2) but make sure 'count' is read before to return
  * (unless error is encountered) */
-int anetWrite(int fd, char *buf, int count)
+int anetWrite(int fd, const char *buf, int count)
 {
     int nwritten, totlen = 0;
     while(totlen != count) {
@@ -272,7 +272,7 @@ static int anetListen(char *err, int s, struct sockaddr *sa, socklen_t len) {
     return ANET_OK;
 }
 
-int anetTcpServer(char *err, int port, char *bindaddr)
+int anetTcpServer(char *err, int port, const char *bindaddr)
 {
     int s;
     struct sockaddr_in sa;
@@ -294,7 +294,7 @@ int anetTcpServer(char *err, int port, char *bindaddr)
     return s;
 }
 
-int anetUnixServer(char *err, char *path, mode_t perm)
+int anetUnixServer(char *err, const char *path, mode_t perm)
 {
     int s;
     struct sockaddr_un sa;
